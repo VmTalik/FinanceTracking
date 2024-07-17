@@ -1,0 +1,31 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+{% block content %}
+<div class="wrapper_index" style="margin-left: 100px;">
+<div class="navbar" style="margin-left: 55%; margin-right:25%; font-size: 20px; ">
+    {% if user.is_authenticated %}
+    <a class="navbar__profile link-underline link-underline-opacity-0" href="{% url 'profile' %}">Личный кабинет</a>
+    <div> 
+        <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" style="background: rgb(189, 231, 208);color:RoyalBlue; border:0">Выход</button>
+        </form>
+    </div>
+    {% else %}
+    <a class="navbar__login link-underline link-underline-opacity-0" href="{% url 'register' %}">Регистрация</a>
+    <a class="navbar__login link-underline link-underline-opacity-0" href="{% url 'login' %}">Вход</a>
+    {% endif %}
+</div>
+<div class="header mt-5" style="margin-left: 8%;">
+    <div class="header__text">
+        <h1><em>Учет личных финансов</em></h1>
+        <em><p class="mt-5" style="font-size: 24px;">Правильные финансовые решения каждый день.
+        Сайт, который заботится о Ваших финансах. <br>Более 100 000 пользователей уже с нами.
+    </p></em>
+    </div>
+</div>
+<div style="margin-left: 8%;">
+    <img height="580" width="73%" src="{% static 'img/index_image.jpg'%}">
+</div>
+</div>
+{% endblock %}

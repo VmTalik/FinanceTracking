@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Главная{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+</head>
+<body class="base-wrap" style="background: rgb(189, 231, 208); margin: 50px; margin-left: 100px;">
+<div class="content">
+    <div class="header">
+        <div class="header__text"></div>
+    </div>
+    <div class="menu"></div>
+    {% include 'includes/messages.html' %}
+    {% block content %}
+    {% endblock %}
+</div>
+<footer>
+    <div class="footer">
+    </div>
+</footer>
+</body>
+</html>
