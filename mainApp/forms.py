@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django import forms
 from .models import Expense
+from django.forms.widgets import NumberInput
 
 
 class UserRegisterForm(UserCreationForm):
@@ -46,3 +47,16 @@ class UserLoginForm(AuthenticationForm):
                 'class': 'form-control',
                 'autocomplete': 'off'
             })
+
+
+class ExpenseForm(forms.ModelForm):
+    date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}),
+                           label='Дата расхода',
+                           required=True)
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}),
+                                  label='Описание',
+                                  required=True)
+
+    class Meta:
+        model = Expense
+        fields = ('value', 'description', 'date')

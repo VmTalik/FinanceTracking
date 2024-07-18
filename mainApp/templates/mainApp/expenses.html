@@ -1,0 +1,32 @@
+{% extends 'layout/basic.html' %}
+{% block title %}
+Список расходов
+{% endblock %}
+{% block content %}
+<a class="navbar__profile link-underline link-underline-opacity-0" href="{% url 'profile' %}">Вернуться в личный кабинет</a>
+<h3 style="margin-top: 30px;">Список расходов</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Описание</th>
+      <th scope="col">Значение</th>
+      <th scope="col">Дата</th>
+      <th scope="col">Редактирование</th>
+      <th scope="col">Удаление</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for expense in object_list %}
+    <tr>
+      <th scope="row">{{expense.pk}}</th>
+      <td>{{expense.description}}</td>
+      <td>{{expense.value}}</td>
+      <td>{{expense.date}}</td>
+      <td><a href="{% url 'update_expense' expense_id=expense.id %}"><button class="edit_expense">Редактировать расход</button></a></td>
+      <td><a href="{% url 'delete_expense' expense_id=expense.id %}"><button class="delete_expense">Удалить расход</button></a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

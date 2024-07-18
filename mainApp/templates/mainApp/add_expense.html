@@ -1,0 +1,20 @@
+{% extends 'layout/basic.html' %}
+{% block title %}
+Добавление расхода
+{% endblock %}
+{% block content %}
+<div class="card mb-3 border-0 shadow w-50" style="margin-top: 16%; margin-left: 20%">
+    <div class="card-body">
+        <div class="card-title nth-card-title p-3">
+            <h3>Добавление расхода</h3>
+        </div>
+        <form method="post" action="{% url 'add_expense' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-grid gap-2 d-md-block mt-2 p-2">
+                <button type="submit" class="btn btn-dark">Добавить</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
