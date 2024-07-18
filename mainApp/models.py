@@ -5,7 +5,7 @@ User = get_user_model()
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Категория расхода')
+    name = models.CharField(max_length=50, verbose_name='Категория расхода', unique=True)
 
     def __str__(self):
         return self.name
