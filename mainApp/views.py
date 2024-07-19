@@ -10,6 +10,10 @@ from .services.mixins import UserIsNotAuthenticated
 from .models import Expense, Category, User
 from .forms import ExpenseForm
 from .utilities import classifier
+import io
+import matplotlib.pyplot as plt
+import urllib, base64
+from collections import Counter
 
 
 class UserRegisterView(UserIsNotAuthenticated, SuccessMessageMixin, CreateView):
@@ -47,8 +51,27 @@ class ProfileView(LoginRequiredMixin, View):
     """Личный кабинет пользователя"""
 
     def get(self, request):
-        expenses = Expense.objects.all()
-        return render(request, 'mainApp/profile.html', context={'expenses': expenses})
+        expenses = Expense.objects.all().select_related('category_id')
+        x = [expense.date for expense in expenses]
+        y = [expense.value for expense in expenses]
+        category_names = [expense.category_id.name for expense in expenses]
+        c = Counter(category_names)
+        data_circle = [c[expense] for expense in c]
+        labels_circle = [i for i in c]
+        plt.figure(figsize=(7, 9))
+        plt.subplot(1, 2, 1)
+        plt.plot(x, y)
+        plt.grid(True)
+        plt.xticks(rotation=70)
+        plt.subplot(1, 3, 3)
+        plt.pie(data_circle, labels=labels_circle)
+        fig = plt.gcf()
+        buf = io.BytesIO()
+        fig.savefig(buf, format='png')
+        buf.seek(0)
+        string = base64.b64encode(buf.read())
+        uri = urllib.parse.quote(string)
+        return render(request, 'mainApp/profile.html', context={'expenses': expenses, 'data': uri})
 
 
 class MainView(TemplateView):
